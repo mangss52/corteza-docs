@@ -1,0 +1,45 @@
+= DRAFT 3
+
+
+= Record list filtering
+
+Corteza provides an advanced filtering mechanism that allows you to easily filter your record by any field type, string, number, datetime
+
+
+== Integration
+
+To use the record list filtering, hover over a filter icon in record list and a popup with the filter dialog will appear
+
+=== Basic filtering
+The filter dialog contains three main fields by which you can filter your records
+
+* first one is a select filed where you select the actual field name by which you want to filer your fields
+* second one is an operator field  where you can select three values "Equal", "Not equal" and "Contains"
+* third field is where you enter the actual search value
+
+image1
+
+=== Filtering with multiple parameters
+
+The filter dialog allows the use of multiple search parametrs to help you find the data that you are looking for. Clicking on a `+Add` button located below your first search parameter line will create a second search line
+
+* you are able to determine how you want to join your two serch parameters by selecting the option `and` or `or` in a newly created select field
+
+image2
+
+=== Combining queries
+
+Query combination is possible by clicking on the plus button. This will open a new search group that can be combined to your first search group
+
+* use select field between the groups to determine how you would like to join the two search groups 
+
+image3
+
+== Delete filter
+
+Once you set a filter the filter icon will change its color and you will be able to know for which columns you have set filters.
+
+Filters can be deleted by clicking on a delete icon. If you have multiple search parameters you will have to delete them all in order to remove the filter, once the filters are deleted the filter icon in the record list will change its state to default value. 
+
+
+
