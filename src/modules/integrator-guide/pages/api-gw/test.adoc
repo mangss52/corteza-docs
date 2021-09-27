@@ -151,144 +151,6 @@ Multi-value headers can currently not be used.
 
 |===
 
-// #############################################################################
-
-General Headers
-Please refer to tutorialspoint for further examples and explanation.
-
-Table 2. A list of available General Headers:
-Cache-Control
-
-Request
-
-Cache-control: [no-cache, no-store, max-age = seconds, max-stale = seconds, min-fresh, 	no-transform, only-if-cached]
-Response
-
-Cache-control: [public, private, no-cache, no-store, no-transform, must-revalidate, proxy-revalidate, max-age = seconds, s-maxage = seconds]
-Connection
-
-Options
-
-Connection: [close, keep-alive]
-Date
-
-Formats
-Sun, 06 Nov 1994 08:49:37 GMT ; RFC 822, updated by RFC 1123
-
-Sunday, 06-Nov-94 08:49:37 GMT ; RFC 850, obsoleted by RFC 1036
-
-Sun Nov 6 08:49:37 1994 ; ANSI C’s asctime() format
-
-Pragma
-
-Options
-
-Pragma: [no-cache, no-cache]
-Trailer
-
-Options
-
-Pragma: [no-cache, no-cache]
-Message header fields listed in the Trailer header field must not include the following header fields:
-
-Transfer-Encoding
-
-Content-Length
-
-Trailer
-
-Transfer-Encoding
-
-Options
-
-Transfer-Encoding: chunked
-Upgrade
-
-Options
-
-Upgrade: HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11
-Via
-
-Options
-
-Via: 1.0 fred, 1.1 nowhere.com (Apache/1.1)
-Warning
-
-The Warning general-header is used to carry additional information about the status or transformation of a message which might not be reflected in the message
-
-Options
-
-Warning : warn-code SP warn-agent SP warn-text SP warn-date
-Client Request Headers
-Table 3. A list of available General Headers:
-Accept
-
-The Accept request-header field can be used to specify certain media types which are acceptable for the response
-
-Request
-
-Accept: type/subtype [q=qvalue]
-Response
-
-Accept: text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c
-Accept-Charset
-
-The Accept-Charset request-header field can be used to indicate what character sets are acceptable for the response
-
-Accept-Charset: character_set [q=qvalue]
-Accept-Charset: iso-8859-5, unicode-1-1; q=0.8
-Accept-Encoding: encoding types
-Accept-Encoding
-
-The Accept-Encoding request-header field is similar to Accept, but restricts the content-codings that are acceptable in the response.
-
-Accept-Encoding: encoding types
-Accept-Encoding: compress, gzip
-Accept-Encoding:
-Accept-Encoding: *
-Accept-Encoding: compress;q=0.5, gzip;q=1.0
-Accept-Encoding: gzip;q=1.0, identity; q=0.5, *;q=0
-Authorization
-
-The Authorization request-header field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.
-
-Authorization : credentials
-Authorization: BASIC Z3Vlc3Q6Z3Vlc3QxMjM=
-Cookie
-
-The Cookie request-header field value contains a name/value pair of information stored for that URL
-
-Cookie: name=value
-Cookie: name1=value1;name2=value2;name3=value3
-Server Response Headers
-Table 4. A list of available General Headers:
-Set-Cookie
-
-The Set-Cookie response-header field contains a name/value pair of information to retain for this URL.
-
-Request
-
-Set-Cookie: name1=value1,name2=value2; Expires=Wed, 09 Jun 2021 10:18:14 GMT
-Response
-
-Accept: text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c
-WWW-Authenticate
-
-The WWW-Authenticate response-header field must be included in 401 (Unauthorized) response messages. The field value consists of at least one challenge that indicates the authentication scheme(s) and parameters applicable to the Request-URI.
-
-Request
-
-WWW-Authenticate : challenge
-Response
-
-WWW-Authenticate: BASIC realm="Admin"
-
-
-
-
-
-// a#######################################################################
-
 === Processing
 
 A processor defines the core business logic that the endpoint performs.
@@ -476,6 +338,8 @@ Use an intermediate variable if you need to read it multiple times.
 
 Enable debug logging in your `.env` file.
 Refer to the xref:devops-guide:configuration/server.adoc[DevOps guide] for details.
+
+
 
 
 === Tail’ing docker logs
