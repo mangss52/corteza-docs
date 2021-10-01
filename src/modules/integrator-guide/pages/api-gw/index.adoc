@@ -201,22 +201,6 @@ Multi-value headers can currently not be used.
 
 // #############################################################################
 
-.The `input` object parameters:
-[cols="1m,5a"]
-|===
-| [#proc-js-input-request]#<<proc-js-input-request,request>>#
-|
-asdasdasdasd
-
-
-|===
-
-
-
-
-
-
-
 
 === General Headers
 Please refer to xref:https://www.tutorialspoint.com/http/http_header_fields.htm[tutorialspoint] for further examples and explanation.
