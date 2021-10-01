@@ -45,6 +45,54 @@ Later sections go more in depth regarding specific filters, what they do, and ho
 .The screenshot shows the user interface for attaching filters to the endpoint.
 image::apigw/route-filters.png[role="data-zoomable"]
 
+// workflow connections 
+== Workflow Connections 
+
+Corteza Workflows allow you to implement custom business logic without the need for any programming knowledge. If you wish to learn more about a specific topic, refer to the . xref:workflow-guide:https://docs.cortezaproject.org/corteza-docs/2021.3/integrator-guide/workflows/index.html[Corteza workflow Guide]
+
+In contrast to Automation scripts, workflows are presented as a simplified BPMN diagram, allowing you to configure instead of code. You are not required to have any BPMN knowledge, although it might be helpful.
+
+In order to extend the Gateway functionality as well as bring greater front end reach it was decided to integrate Corteza Workflows. This gives user very high level of manipulation and automation using already well developed and tested feature. 
+
+.Block image
+image::apigw/workflow-example.png[role="data-zoomable"]
+
+
+=== How to
+
+In order for a user to connect a newly created API route an already existing workflow must be created and chosen. 
+
+* From the admin panel on the left hand side select Horizon(API Gateway).
+* Select the route you would like to edit or simply create a new one.
+* On the routes page under the filer lists on the bottom half of the page, select the "Processing" tab and click "Add Filter" and select the "Workflow Processor".
+* A modal popup presents the user to activate the filer and secondly the ability to search for the desired workflow in a search component. 
+* Click save and close.
+* Click submit on the "Filter Lists" form to save the changes.
+
+=== Configuring Workflows
+In order for a workflow to initiate a trigger from a API route a couple of steps need to be followed to complete the API to Workflow configuration
+
+* Firstly navigate to the desired Worflow and click "Open Builder".
+* On the desired Trigger enter the configuration option for the component
+* Under the the configuration heading the default values are required
+** Resource == System
+** Event == onManual
+* This allows a System generated trigger to receive the routes HTTP payload for consumption
+
+=== Testing 
+Testing the endpoint can be simply done by setting the route to a GET method and tested via a web browser or another API request builder such as POSTMAN.
+
+// TODO 
+// there should be a small animated gif showing the linking and testing of a route to its given workflow
+// the workflow selector isnt in release so producing this now is redundant 
+
+
+// workflow connections 
+
+
+
+
+
 == Endpoint filters
 
 Filters allow you to validate and process requests; as well as define the response.
