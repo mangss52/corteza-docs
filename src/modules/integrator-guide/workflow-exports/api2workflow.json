@@ -1,0 +1,227 @@
+{
+  "workflows": [
+    {
+      "handle": "api2workflow",
+      "enabled": true,
+      "meta": {
+        "name": "api2workflow",
+        "description": "",
+        "visual": null
+      },
+      "keepSessions": 0,
+      "steps": [
+        {
+          "stepID": "4",
+          "kind": "termination",
+          "ref": "",
+          "arguments": null,
+          "results": null,
+          "meta": {
+            "name": "",
+            "description": "",
+            "visual": {
+              "id": "4",
+              "parent": "1",
+              "value": "Process Complete",
+              "xywh": [
+                3488,
+                1960,
+                200,
+                80
+              ]
+            }
+          }
+        },
+        {
+          "stepID": "19",
+          "kind": "function",
+          "ref": "logDebug",
+          "arguments": [
+            {
+              "target": "message",
+              "expr": "payload",
+              "type": "String"
+            }
+          ],
+          "results": [],
+          "meta": {
+            "name": "",
+            "description": "",
+            "visual": {
+              "id": "19",
+              "parent": "1",
+              "value": "Log Payload",
+              "xywh": [
+                2488,
+                2208,
+                200,
+                80
+              ]
+            }
+          }
+        },
+        {
+          "stepID": "25",
+          "kind": "function",
+          "ref": "jsenvExecute",
+          "arguments": [
+            {
+              "target": "scope",
+              "expr": "payload",
+              "type": "Any"
+            },
+            {
+              "target": "source",
+              "value": "var data\n\ntry {\n\tdata = JSON.parse(input)\n} catch (e) {\n\tthrow new Error('could not parse user info payload: ' + e)\n}\n\nreturn data",
+              "type": "String"
+            }
+          ],
+          "results": [
+            {
+              "target": "MyData",
+              "expr": "resultAny"
+            }
+          ],
+          "meta": {
+            "name": "",
+            "description": "",
+            "visual": {
+              "id": "25",
+              "parent": "1",
+              "value": "Serialize JSON and return MyData",
+              "xywh": [
+                2856,
+                2208,
+                200,
+                80
+              ]
+            }
+          }
+        },
+        {
+          "stepID": "28",
+          "kind": "function",
+          "ref": "logError",
+          "arguments": [
+            {
+              "target": "message",
+              "expr": "MyData.name +\"_____ \" + MyData.surname",
+              "type": "String"
+            }
+          ],
+          "results": [],
+          "meta": {
+            "name": "",
+            "description": "",
+            "visual": {
+              "id": "28",
+              "parent": "1",
+              "value": "Log MyData.VALUE",
+              "xywh": [
+                3216,
+                2208,
+                200,
+                80
+              ]
+            }
+          }
+        }
+      ],
+      "paths": [
+        {
+          "parentID": "19",
+          "childID": "25",
+          "meta": {
+            "name": "",
+            "description": "",
+            "visual": {
+              "id": "26",
+              "parent": "1",
+              "points": [],
+              "style": "exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;",
+              "value": null
+            }
+          }
+        },
+        {
+          "parentID": "25",
+          "childID": "28",
+          "meta": {
+            "name": "",
+            "description": "",
+            "visual": {
+              "id": "29",
+              "parent": "1",
+              "points": [],
+              "style": "exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;",
+              "value": null
+            }
+          }
+        },
+        {
+          "parentID": "28",
+          "childID": "4",
+          "meta": {
+            "name": "",
+            "description": "",
+            "visual": {
+              "id": "30",
+              "parent": "1",
+              "points": [],
+              "style": "exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;",
+              "value": null
+            }
+          }
+        }
+      ],
+      "triggers": [
+        {
+          "resourceType": "system",
+          "eventType": "onManual",
+          "constraints": [
+            {
+              "name": "",
+              "op": "=",
+              "values": [
+                ""
+              ]
+            }
+          ],
+          "enabled": true,
+          "stepID": "19",
+          "meta": {
+            "description": "",
+            "visual": {
+              "edges": [
+                {
+                  "childID": "19",
+                  "meta": {
+                    "description": "",
+                    "label": "",
+                    "visual": {
+                      "id": "20",
+                      "parent": "1",
+                      "points": [],
+                      "style": "exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;",
+                      "value": null
+                    }
+                  },
+                  "parentID": "3"
+                }
+              ],
+              "id": "3",
+              "parent": "1",
+              "value": "API POST ",
+              "xywh": [
+                2224,
+                1960,
+                200,
+                80
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

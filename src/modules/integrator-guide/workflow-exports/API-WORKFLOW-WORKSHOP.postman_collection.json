@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "7de17fbd-030d-4a7b-ad76-f9eba1942cc9",
+		"name": "API-WORKFLOW-WORKSHOP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Contact",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"type\": \"update\",\r\n\t\"name\": \"Foo\",\r\n    \"surname\": \"Bar\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qc.cortezaproject.org/api/gateway/api2workflow/post",
+					"protocol": "https",
+					"host": [
+						"qc",
+						"cortezaproject",
+						"org"
+					],
+					"path": [
+						"api",
+						"gateway",
+						"api2workflow",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get QC test Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//1000 ms is a maximum allowed value according to requirements \r",
+							"maximumResponseTime = 100;\r",
+							"//100 is a number of sent requests according to requirements \r",
+							"iterations = 100;\r",
+							"//100 ms is a delay between requests according to requirements \r",
+							"delay = 0;\r",
+							"//responseTimes is an array for collecting response time values\r",
+							"responseTimes = [];\r",
+							"i=0;\r",
+							"function sendRequest() {\r",
+							"    pm.sendRequest({\r",
+							"        url: \"https://herotel.staging.crust.tech/api/gateway/test/andre/get\",\r",
+							"        method: 'GET'\r",
+							"    }, function (err, res) {\r",
+							"        pm.test(\"Response time is \" + res.responseTime, function (){\r",
+							"        pm.expect(err).to.equal(null);\r",
+							"        pm.expect(res).to.have.property('code', 200);\r",
+							"        responseTimes.push(res.responseTime);\r",
+							"        });\r",
+							"        if (i < iterations - 1) {\r",
+							"            i++;\r",
+							"            setTimeout(sendRequest, delay);\r",
+							"        } \r",
+							"        else {\r",
+							"            percentile90ResponseTime = quantile(responseTimes, 90);\r",
+							"            pm.test(\"90 percentile response time \" + percentile90ResponseTime + \" is lower than \" + maximumResponseTime + \", the number of iterations is \" + iterations, function () {\r",
+							"                pm.expect(percentile90ResponseTime).to.be.below(maximumResponseTime);\r",
+							"            });\r",
+							"        }\r",
+							"    });\r",
+							"}\r",
+							"sendRequest();\r",
+							"function sortNumber(a,b) {\r",
+							"    return a - b;\r",
+							"}\r",
+							"function quantile(array, percentile) {\r",
+							"    array.sort(sortNumber);\r",
+							"    index = percentile/100. * (array.length-1);\r",
+							"    if (Math.floor(index) == index) {\r",
+							"     result = array[index];\r",
+							"    } else {\r",
+							"        j = Math.floor(index)\r",
+							"        fraction = index - j;\r",
+							"        result = array[j] + (array[j+1] - array[j]) * fraction;\r",
+							"    }\r",
+							"    return result;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://herotel.staging.crust.tech/api/gateway/test/andre/get",
+					"protocol": "https",
+					"host": [
+						"herotel",
+						"staging",
+						"crust",
+						"tech"
+					],
+					"path": [
+						"api",
+						"gateway",
+						"test",
+						"andre",
+						"get"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

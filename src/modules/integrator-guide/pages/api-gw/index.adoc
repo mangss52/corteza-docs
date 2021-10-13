@@ -373,3 +373,127 @@ server_1  | 13:52:29.636        DEBUG   rbac    rbac/service.go:102     allow tr
 Last updated 2021-09-27 18:01:45 +0200
 Some content has been disabled in this document
 ----
+
+
+
+
+
+
+= Integrations Gateway Configuration
+
+=== Example 
+
+Enable debug logging in your `.env` file.
+Refer to the xref:devops-guide:configuration/server.adoc[DevOps guide] for details.
+
+=== Overview
+
+The example provided is an example of a typical incoming POST request from and external source that is received by the custom defined route and workflow in Corteza. 
+
+.A high-level listing of process that are need: 
+. Postman/cUrl requests introduction and build
+. Introduction into building routes in integration gateway
+. Assigning WorkFlow processor
+. POST the HTTP request to the endpoint
+. Receive Request body
+. Print to the log file
+
+=== Lets get started 
+The follow is guide on how to configure a basic example of an incoming POST route that logs information. 
+More complex examples could be demonstrated in the workflows.
+
+
+==== Postman/cUrl POST requests
+Initially we need to replicate an incoming request. 
+This can be done in many ways such as cURL or POSTMAN. 
+
+==== Request examples:
+cURL
+
+.An example of using `grep` to show only debug logs:
+[source,bash]
+----
+curl --location --request POST 'http://localhost:18080/api/gateway/api2workflow/post' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"type": "update",
+	"name": "Foo",
+    "surname": "Bar"
+}'
+----
+
+Please see link to postman collection, import the file to your local installation. xref:www.google.com[LINK TO COLLECTION]
+
+==== Building routes in integration gateway
+From the admin panel, navigate to "Integrations Gateway" and create a new route. 
+
+SIDE Note: all API routes are prefixed by "{BASE_URL}/api/gateway". Therefore all routes that are added will precede this path
+
+The route can look as follows: 
+
+.The screenshot shows the user interface for creating a new endpoint.
+image::apigw/POST-route.png[role="data-zoomable"]
+
+
+
+==== Assigning WorkFlow processor
+
+NOTE : Please be sure to have and empty workflow already created at this point before proceeding. 
+
+Navigate to the filter lists form group on the route edit page.
+
+Select the "Processing" tab and click "add filter".
+
+Select the desired Workflow and save the filters panel. 
+
+.The screenshot shows the user interface for creating a new endpoint.
+image::apigw/select-workflow-processing.png[role="data-zoomable"]
+
+
+
+==== POST the HTTP request to the endpoint
+At the point we should be ready to send the request to the endpoint via a POST method and receive a 200 response,
+
+
+.The screenshot shows the user interface for creating a new endpoint.
+image::apigw/post-request-postman.png[role="data-zoomable"]
+
+==== Receive Request body
+
+The request body in this stage will be serialized assigned to a local value and printed in the log. 
+
+Please see attached workflow export for reference to the example explained. 
+xref:www.google.com[LINK TO WORKFLOW]
+
+Below is a screenshot of what the workflow will look like once imported.
+image::apigw/example-workflow.png[role="data-zoomable"]
+
+
+==== Print to the log file
+
+Below is and example of what will be printed in the logs when a successful request is has been received. 
+
+As stated previously in this document please refer to the section where tailing the log files is explained.
+
+.An example of logs:
+[source,bash]
+----
+server_1    | 16:08:02.435      DEBUG   workflow.session.exec   {
+server_1    |   "type": "update",
+server_1    |   "name": "Foo",
+server_1    |     "surname": "Bar"
+server_1    | } {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482562575, "stepID": 19, "functionRef": "logDebug", "functionKind": "function"}
+server_1    | 16:08:02.435      DEBUG   workflow.session.exec   executed        {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482562575, "stepID": 19, "functionRef": "logDebug", "functionKind": "function", "execTime": "46.079µs"}
+server_1    | 16:08:02.435      DEBUG   workflow.session.exec   step executed   {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482562575, "stepID": 19, "resultType": "*expr.Vars"}
+server_1    | 16:08:02.435      DEBUG   workflow.session.exec   executed        {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482562575, "status": "active"}
+server_1    | 16:08:02.435      DEBUG   workflow.session.exec   next step queued        {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482562575, "nextStepId": 25}
+server_1    | 16:08:02.435      DEBUG   workflow.session.exec   add step to queue       {"workflowID": 253179254970281988, "sessionID": 253189131482497039}
+server_1    | 16:08:02.435      DEBUG   workflow.session.exec   pulled state from queue {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482628111}
+server_1    | 16:08:02.436      DEBUG   workflow.session.exec   executed        {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482628111, "stepID": 25, "functionRef": "jsenvExecute", "functionKind": "function", "execTime": "455.805µs"}
+server_1    | 16:08:02.436      DEBUG   workflow.session.exec   step executed   {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482628111, "stepID": 25, "resultType": "*expr.Vars"}
+server_1    | 16:08:02.436      DEBUG   workflow.session.exec   executed        {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482628111, "status": "active"}
+server_1    | 16:08:02.436      DEBUG   workflow.session.exec   next step queued        {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482628111, "nextStepId": 28}
+server_1    | 16:08:02.436      DEBUG   workflow.session.exec   add step to queue       {"workflowID": 253179254970281988, "sessionID": 253189131482497039}
+server_1    | 16:08:02.436      DEBUG   workflow.session.exec   pulled state from queue {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482693647}
+server_1    | 16:08:02.436      ERROR   workflow.session.exec   Foo_____ Bar    {"workflowID": 253179254970281988, "sessionID": 253189131482497039, "stateID": 253189131482693647, "stepID": 28, "functionRef": "logError", "functionKind": "function"}
+----
